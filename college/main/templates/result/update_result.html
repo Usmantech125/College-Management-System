@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-5">
+    <div class="container">
+        <h2>Update Result</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="student_id" class="form-label">Student ID</label>
+                <input type="number" class="form-control" name="student_id" value="{{ result.student_id }}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="student_name" class="form-label">Student Name</label>
+                <input type="text" class="form-control" name="student_name" value="{{ result.student_name }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="course" class="form-label">Course</label>
+                <select class="form-select" name="course" required>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}" {% if course.id == result.course.id %}selected{% endif %}>
+                            {{ course.course_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="exam" class="form-label">Exam</label>
+                <select class="form-select" name="exam" required>
+                    {% for exam in exams %}
+                        <option value="{{ exam.id }}" {% if exam.id == result.exam.id %}selected{% endif %}>
+                            {{ exam.exam_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="score" class="form-label">Score</label>
+                <input type="number" step="0.01" class="form-control" name="score" value="{{ result.score }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="grade" class="form-label">Grade</label>
+                <input type="text" class="form-control" name="grade" value="{{ result.grade }}" maxlength="2" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{% url 'result' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
